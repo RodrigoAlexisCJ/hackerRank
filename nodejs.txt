@@ -1,0 +1,186 @@
+process.stdin.resume();
+process.stdin.setEncoding("ascii");
+_input = "";
+process.stdin.on("data", function (input) {
+    _input += input;
+});
+
+process.stdin.on("end", function () {
+   logString(_input);
+});
+
+
+ejercicio 1
+process.stdin.on("end", function () {
+    para(input);//write your code within the function
+});
+
+function para(wor){      
+       var word = wor.toLowerCase();
+       var revArray = word.split("").reverse().join("");
+       if(word===revArray){
+           console.log(true);
+       }
+       else{
+           console.log(false);
+       }
+}
+
+ejercicio 2
+
+function largestPrimeFactor(number){
+     var divisor = 2;
+     var num= number;
+     while(num>1){
+         if(num%divisor===0){
+             num/=divisor;
+         }
+         else{
+             divisor++;
+         }
+     }  
+  console.log(divisor);   
+//return divisor;
+}
+
+ejercicio 3
+function logString(stringToLog) {
+	 console.log('Logging ${stringToLog} every 0.5 seconds');
+        var cont = 0;
+        var rep = setInterval(function(){
+          console.log(stringToLog)
+          cont++;
+          if(cont===5){
+            clearInterval(rep);
+          }},500); 
+	    
+} 
+
+function logString(stringToLog) {
+        var cont = 0;
+	  var stop = function(i){
+		clearInterval(i);
+}
+        var rep = setInterval(function(){
+          console.log(stringToLog)
+          cont++;
+          if(cont===5){
+            stop(rep);
+          }},500); 
+	    
+} 
+
+logString("hola");
+
+ejercicio 4
+function callback(num){
+    var num1 = num[0];
+    var num2 = num[1];
+    var sum =0;
+    var cont= 1;
+    var nume1=num1;
+    var nume2=num2;
+    setTimeout(function(){
+       while( nume1 <= 1000 || nume2 <= 1000 ){
+                if(nume1<=1000){
+                    if(nume2<1000){
+                        sum+=nume1+nume2;
+                    }
+                    else{
+                        var flag = nume2==1000?false:true;
+                        if(flag){
+                            sum+=nume1;
+                        }
+                        else{
+                            sum+=nume1+nume2;
+                        }
+                    }
+                }
+                else{
+                    if(nume2<=1000){
+                        var flag = nume1==1000?false:true;
+                        if(flag){
+                            sum+=nume2;
+                        }
+                        else{
+                            sum+=nume1+nume2;
+                        }
+                    }
+                    else{
+                        break;
+                    }
+                }
+                cont++;
+                nume1=num1*cont;
+                nume2=num2*cont;
+    }
+        console.log("la suma es "+sum);
+    },2000);
+}
+var nume = [100,1000];
+callback(nume);
+
+const EventEmitter = require('events');
+var eventEmitter= new EventEmitter();
+var loginfo = function(num){
+    var num1 = num[0];
+    var num2 = num[1];
+    console.log("Multiples of "+num1+" & "+num2);
+};
+eventEmitter.on("loginfo",loginfo);
+eventEmitter.emit("loginfo",nume);
+
+ejercicio 5
+
+//import the 'fs' and 'maths.js' module
+//read the content of 'input.txt' file and copy the content to 'duplicate.txt' file
+//call the 'sum and 'multiply' functions of maths module and store the return values in 'result' and 'product' variables
+//write the content 'The sum of the numbers is: result. The product of the numbers is: product' to the 'output.txt' file
+
+var fs = require('fs');
+var maths = require('./maths');
+fs.writeFileSync('duplicate.txt',fs.readFileSync('input.txt'));
+var result = maths.sum();
+var product = maths.multiply();
+var content = 'The sum of the numbers is: '+result+'. The product of the numbers is: '+product;
+fs.writeFileSync('output.txt',content);
+
+//Math
+function sum (a,b){
+  return a+b;
+}
+
+function multiply(a,b){
+  return a*b;
+}
+
+module.exports.sum = sum;
+module.exports.multiply= multiply;
+
+//ejercicio 6
+
+var fs = require('fs');
+var readableStream = fs.createReadStream('Node-stream-handson/data_file.txt');
+var data="";
+readableStream.setEncoding('UTF8');
+readableStream.on('data',function(chunk){
+  data+=chunk;
+}); 
+readableStream.on('end',function(){
+  console.log(data.length);
+});
+
+//ejercicio 7
+var fs = require('fs');
+var writeData='Node.js is an ultimate backend javascript for backend development';
+var writeableStream = fs.createWriteStream('Big_data.txt');
+for (var i = 0; i<10^5;i++){
+  writeableStream.write(writeData,'UTF8');
+}
+writeableStream.end();
+
+//ejercicio 8
+var fs = require('fs');
+var readableStream = fs. createReadStream('data_file.txt');
+var writeableStream = fs.createWriteStream('new_data_file.txt');
+readableStream.pipe(writeableStream);

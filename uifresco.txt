@@ -1,0 +1,365 @@
+function onFormSubmit() {
+  readFormData();
+}
+
+function readFormData() {
+  var dataArr=[];
+  var fName= document.getElementById("fname").value;
+  var lName= document.getElementById("lname").value;
+  var location= document.getElementById("location").value;
+  if(fName && lName && location){
+    dataArr.push(fName);
+    dataArr.push(lName);
+    dataArr.push(location);
+    insertNewRecord(dataArr);
+  }   
+  else{
+    alert("input field cannot be empty");
+ }
+}
+
+function insertNewRecord(data) {
+  var table= document.getElementById("tabledata");
+  var newRow= document.createElement("tr");
+  var newcell1=document.createElement("td");
+  var newcell2=document.createElement("td");
+  var newcell3=document.createElement("td");
+  newcell1.innerHTML=data[0];
+  newcell2.innerHTML=data[1];
+  newcell3.innerHTML=data[2];
+  newRow.append(newcell1)
+  newRow.append(newcell2)
+  newRow.append(newcell3)
+  table.append(newRow)
+  resetForm();
+}
+function resetForm() {
+  document.getElementById("fname").value="";
+  document.getElementById("lname").value="";
+  document.getElementById("location").value="";
+}
+if (typeof exports !== "undefined") {
+  module.exports = {
+    onFormSubmit,
+    readFormData,
+    insertNewRecord,
+    resetForm,
+  };
+}
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Data Collector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <form id="formvalue" onsubmit="onFormSubmit(); return false">
+        <h2 id="title">Data Collector</h2>
+        <label for="fname" id="firstname">First Name</label>
+        <input
+          type="text"
+          id="fname"
+          name="firstname"
+          placeholder="Your first name.."
+        />
+
+        <label for="lname" id="lastname">Last Name</label>
+        <input
+          type="text"
+          id="lname"
+          name="lastname"
+          placeholder="Your last name.."
+        />
+
+        <label for="location" id="officelocation">Office Location</label>
+        <input
+          type="text"
+          id="location"
+          name="lastname"
+          placeholder="Your office location"
+        />
+
+        <input id="btn" type="submit" value="Submit" />
+      </form>
+      <br /><br />
+      <table class="list" id="employeeList">
+        <thead>
+          <tr>
+            <th id="h1">First Name</th>
+            <th id="h2">Last Name</th>
+            <th id="h3">Location</th>
+          </tr>
+        </thead>
+        <tbody id="tabledata"></tbody>
+      </table>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+####################################################################################################################################################33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var data = [
+  {
+    id: 0,
+    name: "Janu",
+    English: 50,
+    Maths: 86,
+    Science: 77,
+    SocialScience: 88
+  },
+  {
+    id: 1,
+    name: "Thanu",
+    English: 75,
+    Maths: 96,
+    Science: 67,
+    SocialScience: 91
+  },
+  {
+    id: 2,
+    name: "Tara",
+    English: 90,
+    Maths: 35,
+    Science: 86,
+    SocialScience: 100
+  },
+  {
+    id: 3,
+    name: "Glen",
+    English: 79,
+    Maths: 68,
+    Science: 77,
+    SocialScience: 78
+  },
+  {
+    id: 4,
+    name: "Zara",
+    English: 80,
+    Maths: 85,
+    Science: 96,
+    SocialScience: 68
+  }
+]
+
+var subject;
+var filter = 'above';
+var marks;
+var macMarks;
+
+function onPageLoad() {
+  for (var i = 0; i < data.length; i++) {
+    var d1 = document.getElementById('studentData');
+    d1.insertAdjacentHTML('beforeend', `<tr><td>${i + 1}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+
+  }
+  // code goes here to display table on page loads
+}
+
+function filterBy() {
+  // code goes here to select filter by option
+  if (document.getElementById('above').checked) {
+    filter = document.getElementById('above').value;
+  }
+  else if (document.getElementById('below').checked) {
+    filter = document.getElementById('below').value;
+  }
+  else if (document.getElementById('between').checked) {
+    filter = document.getElementById('between').value;
+  }
+
+  if (filter === 'between') {
+    document.getElementById('to').style.display = '';
+    document.getElementById('maxMark').style.display = '';
+  }
+  else {
+    document.getElementById('to').style.display = 'none';
+    document.getElementById('maxMark').style.display = 'none';
+  }
+}
+
+function Clear() {
+  var d1 = document.getElementById('studentData');
+  d1.innerHTML = '';
+  subject = '';
+  filter = 'above';
+  marks = '';
+  maxMarks = '';
+  document.getElementById('to').style.display = 'none';
+  document.getElementById('maxMarks').style.display = 'none';
+  onPageLoad();
+  // code goes here to clear filter
+
+}
+
+function filterClick() {
+  marks = document.getElementById('mark').value;
+  maxMarks = document.getElementById('maxMark').value;
+  subject = document.getElementById('subjects').value;
+  var d1 = document.getElementById('studentData');
+  var count = 0;
+  d1.innerHTML = '';
+  if (filter === 'between') {
+    for (var i = 0; i < data.length; i++) {
+
+      if (subject === 'Maths') {
+        if (data[i].Maths > marks && data[i].Maths < maxMarks) {
+          count++;
+          d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+        }
+      }
+      else if (subject === 'English') {
+        if (data[i].English > marks && data[i].English < maxMarks) {
+          count++;
+          d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+        }
+      }
+      else if (subject === 'Science') {
+        if (data[i].Science > marks && data[i].Science < maxMarks) {
+          count++;
+          d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+        }
+      }
+      else if (subject === 'SocialScience') {
+        if (data[i].SocialScience > marks && data[i].SocialScience < maxMarks) {
+          count++;
+          d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+        }
+      }
+      else {
+        Clear();
+      }
+    }
+  }
+
+  else {
+    if (filter === 'above') {
+
+      for (var i = 0; i < data.length; i++) {
+
+        if (subject === 'Maths') {
+          if (data[i].Maths > marks) {
+            count++;
+            d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+          }
+        }
+        else if (subject === 'English') {
+          if (data[i].English > marks) {
+            count++;
+            d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+          }
+        }
+        else if (subject === 'Science') {
+          if (data[i].Science > marks) {
+            count++;
+            d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+          }
+        }
+        else if (subject === 'SocialScience') {
+          if (data[i].SocialScience > marks) {
+            count++;
+            d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+          }
+        }
+        else {
+          Clear();
+        }
+      }
+    }
+
+    else {
+      if (filter === 'below') {
+
+        for (var i = 0; i < data.length; i++) {
+
+          if (subject === 'Maths') {
+            if (data[i].Maths < marks) {
+              count++;
+              d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+            }
+          }
+          else if (subject === 'English') {
+            if (data[i].English < marks) {
+              count++;
+              d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+            }
+          }
+          else if (subject === 'Science') {
+            if (data[i].Science < marks) {
+              count++;
+              d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+            }
+          }
+          else if (subject === 'SocialScience') {
+            if (data[i].SocialScience < marks) {
+              count++;
+              d1.insertAdjacentHTML('beforeend', `<tr><td>${count}</td><td>${data[i].name}</td><td>${data[i].English}</td><td>${data[i].Maths}</td><td>${data[i].Science}</td><td>${data[i].SocialScience}</td></tr>`)
+            }
+          }
+          else {
+            Clear();
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+##########################################################################33
+
+function logString(stringToLog) {
+    console.log(`Logging ${stringToLog} every 0.5 seconds`);
+    let n=5;
+    function cont(){
+        console.log(`${stringToLog}`);
+        n--;
+        if(n==0){
+            clearInterval(lan);
+            end;
+        }
+     }
+   let lan = setInterval(cont,0.5);
+} 
+setTimeout(logString,300)
+
+

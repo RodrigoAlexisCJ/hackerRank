@@ -1,0 +1,54 @@
+//Data repository unit testing
+@RunWith(SpringRunner.class)
+@DataJpaTest
+public class HospitalRepositoryTest {
+    @Autowired
+    private TestEntityManager entityManager;
+    @Autowired
+    private HospitalRepository hospitalRepository;
+    @Test
+    public void testFindById() {
+        entityManager.persist(new Hospital(1003,"Vcare Hospital","Mumbai",3.1));
+        Hospital hosp = hospitalRepository.findOne(1003);
+        assertEquals("Vcare Hospital", hosp.getName());
+   }
+}
+
+//MVC Controller Unit Testing
+
+
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class HospitalControllerTest {
+    private MockMvc mockMvc;
+    @Autowired
+    WebApplicationContext context;
+    @Before
+    public void setup() {
+    	mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
+	@Test
+	public void retrievetest_ok() throws Exception {
+		 mockMvc.perform(get("/test/hospitals/1000" )).andDo(print())
+	                .andExpect(status().isOk())
+	                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1000))
+	                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Test Hospital"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.rating").value(3.8))
+	                .andExpect(MockMvcResultMatchers.jsonPath("$.city").value("Chennai"));
+	}
+
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment)
+public class CreateClientIntegrationTest {
+    @Autowired
+    private TestRestTemplate restTemplate;
+    @Test
+    public void createClient() {
+        ResponseEntity<Client> responseEntity =
+            restTemplate.postForEntity("/test/hospitals", new Hospital(1,"Test hospital","Chennai",3.9), Hospital.class);
+        Hospital hosp = responseEntity.getBody();
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals("Test hospital", hosp.getName());
+    }
+}

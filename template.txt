@@ -1,0 +1,32 @@
+//Template Engine thymleaf
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    <version>1.5.6.RELEASE</version>
+</dependency>
+
+//Template Engine freemarker
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-freemarker</artifactId>
+    <version>1.5.6.RELEASE</version>
+</dependency>
+
+
+//Template Engine groovy
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-groovy-templates</artifactId>
+    <version>1.5.6.RELEASE</version>
+</dependency>
+
+//Catching
+import org.springframework.cache.annotation.Cacheable
+import org.springframework.stereotype.Component;
+@Component
+public class RatingService {
+   @Cacheable("premium")
+    public int computePremium(int rate) {
+        // ...
+    }
+}
